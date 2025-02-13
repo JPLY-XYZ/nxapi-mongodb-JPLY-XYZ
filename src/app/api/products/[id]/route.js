@@ -46,6 +46,11 @@ export async function DELETE(request, { params }) {
     const { id } = await params;
     const results = await collection.deleteOne({ _id: new ObjectId(id) });
 
-    return new Response(JSON.stringify(results), { headers: corsHeaders });
+    return new Response(JSON.stringify(results), {
+        headers: {
+            ...corsHeaders,
+            "Access-Control-Allow-Origin": "*",
+        },
+    });
 }
 
