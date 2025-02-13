@@ -10,10 +10,7 @@ export async function GET(request, { params }) {
 
     return new Response(JSON.stringify(results[0]), {
         headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+            'Content-Type': 'application/json'
         }
     });
 }
@@ -24,10 +21,7 @@ export async function PUT(request, { params }) {
     if (content != 'application/json') {
         return new Response(JSON.stringify({ message: 'Debes proporcionar datos JSON' }), {
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+                'Content-Type': 'application/json'
             }
         });
     }
@@ -44,10 +38,7 @@ export async function PUT(request, { params }) {
 
     return new Response(JSON.stringify(results), {
         headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+            'Content-Type': 'application/json'
         }
     });
 }
@@ -61,10 +52,7 @@ export async function DELETE(request, { params }) {
 
     return new Response(JSON.stringify(results), {
         headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+            'Content-Type': 'application/json'
         }
     });
 }
