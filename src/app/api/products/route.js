@@ -1,48 +1,46 @@
 import { connectToDatabase } from "@/lib/mongodb";
 
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+};
+
+export async function OPTIONS() {
+    return new Response(null, { status: 204, headers: corsHeaders });
+}
+
 export async function GET(request) {
     const { database } = await connectToDatabase();
-    const collection = database.collection(process.env.MONGODB_COLLECTION);
+    const collection = database.collection("products");
 
     const results = await collection.find({}).toArray();
 
-    return new Response(JSON.stringify(results), {
-        headers: { 
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-        }
-    });
+    return Response.json(results, { headers: corsHeaders });
 }
 
 export async function POST(request) {
-    const content = request.headers.get('content-type');
-
-    if (content !== 'application/json') {
-        return new Response(JSON.stringify({ message: 'Debes proporcionar datos JSON' }), {
-            headers: { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-            }
-        });
+    if (request.headers.get("content-type") !== "application/json") {
+        return Response.json(
+            { message: "Debes proporcionar datos JSON" },
+            { headers: corsHeaders }
+        );
     }
 
     const { database } = await connectToDatabase();
-    const collection = database.collection(process.env.MONGODB_COLLECTION);
+    const collection = database.collection("products");
 
-    const { nombre, descripcion, imagen, fecha_entrada } = await request.json(); // Read body request
-    const results = await collection.insertOne({ nombre, descripcion, imagen, fecha_entrada });
+    const { nombre, precio, fecha, url } = await request.json();
 
-    return new Response(JSON.stringify(results), {
-        headers: { 
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-        }
-    });
+    const newProduct = {
+        nombre,
+        precio,
+        fecha: fecha ? new Date(fecha) : null, // Convertir la fecha a objeto Date
+        url
+    };
+
+    const results = await collection.insertOne(newProduct);
+
+    return Response.json(results, { headers: corsHeaders });
 }
 
