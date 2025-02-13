@@ -1,14 +1,8 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type"
-};
-
 export async function OPTIONS() {
-    return new Response(null, { status: 204, headers: corsHeaders });
+    return new Response(null, { status: 204 });
 }
 
 export async function GET(request, { params }) {
@@ -18,12 +12,12 @@ export async function GET(request, { params }) {
     const { id } = await params;
     const results = await collection.find({ _id: new ObjectId(id) }).toArray();
 
-    return new Response(JSON.stringify(results[0]), { headers: corsHeaders });
+    return new Response(JSON.stringify(results[0]));
 }
 
 export async function PUT(request, { params }) {
     if (request.headers.get("content-type") !== "application/json") {
-        return new Response(JSON.stringify({ message: 'Debes proporcionar datos JSON' }), { headers: corsHeaders });
+        return new Response(JSON.stringify({ message: 'Debes proporcionar datos JSON' }));
     }
 
     const { database } = await connectToDatabase();
@@ -36,7 +30,7 @@ export async function PUT(request, { params }) {
         { $set: { nombre, descripcion, imagen, fecha_entrada } }
     );
 
-    return new Response(JSON.stringify(results), { headers: corsHeaders });
+    return new Response(JSON.stringify(results));
 }
 
 export async function DELETE(request, { params }) {
@@ -48,7 +42,6 @@ export async function DELETE(request, { params }) {
 
     return new Response(JSON.stringify(results), {
         headers: {
-            ...corsHeaders,
             "Access-Control-Allow-Origin": "*",
         },
     });
