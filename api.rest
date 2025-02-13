@@ -1,0 +1,56 @@
+# Ejemplos
+
+POST http://localhost:3000/api/productos HTTP/1.1
+content-type: application/json
+
+{ 
+    "nombre": "Camiseta deportiva", 
+    "descripcion": "Camiseta deportiva de manga corta, ideal para entrenamientos y actividades al aire libre. Fabricada con materiales transpirables y de secado rápido.", 
+    "imagen": "https://example.com/images/camiseta-deportiva.jpg", 
+    "fecha_entrada": "2025-02-13" 
+}
+
+### 
+
+POST https://nxapi-mongodb.vercel.app/api/productos HTTP/1.1
+content-type: application/json
+
+{ 
+    "nombre": "Pantalones de running", 
+    "descripcion": "Pantalones de running de alta calidad, ideales para correr o hacer ejercicio. Fabricados con materiales transpirables y de secado rápido.", 
+    "imagen": "https://example.com/images/pantalones-running.jpg", 
+    "fecha_entrada": "2025-03-01" 
+}
+
+### 
+
+GET http://localhost:3000/api/productos HTTP/1.1
+content-type: application/json
+
+###
+
+GET http://localhost:3000/api/productos/6544f16661269657e5324e80 HTTP/1.1
+content-type: application/json
+
+###
+
+PUT http://localhost:3000/api/productos/655a9b3e8b8747bc6a13a543 HTTP/1.1
+content-type: application/json
+
+{ 
+    "nombre": "Camiseta de running", 
+    "descripcion": "Camiseta de running de manga larga, ideal para correr o hacer ejercicio. Fabricada con materiales transpirables y de secado rápido.", 
+    "imagen": "https://example.com/images/camiseta-running.jpg", 
+    "fecha_entrada": "2025-03-01" 
+}
+
+###
+
+DELETE http://localhost:3000/api/productos/6544f16661269657e5324e80 HTTP/1.1
+content-type: application/json
+
+###
+
+DELETE https://nxapi-mongodb.vercel.app/api/productos/6542da20c20d9ad95c739701 HTTP/1.1
+content-type: application/json
+
