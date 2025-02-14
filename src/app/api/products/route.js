@@ -21,13 +21,13 @@ export async function POST(request) {
     const { database } = await connectToDatabase();
     const collection = database.collection("products");
 
-    const { nombre, precio, fecha, url } = await request.json();
+    const { nombre, descripcion, imagen, fecha_entrada } = await request.json();
 
     const newProduct = {
         nombre,
-        precio,
-        fecha: fecha ? new Date(fecha) : null, // Convertir la fecha a objeto Date
-        url
+        descripcion,
+        imagen,
+        fecha_entrada
     };
 
     const results = await collection.insertOne(newProduct);
