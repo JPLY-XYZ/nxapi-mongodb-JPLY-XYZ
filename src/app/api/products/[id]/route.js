@@ -8,10 +8,6 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization"
 };
 
-export async function OPTIONS() {
-    return Response.json(null, { status: 204, headers: corsHeaders });
-}
-
 export async function GET(request, { params }) {
     const { database } = await connectToDatabase();
     const collection = database.collection(process.env.MONGODB_COLLECTION);

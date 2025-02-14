@@ -6,9 +6,6 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-export async function OPTIONS() {
-    return new Response(null, { status: 204, headers: corsHeaders });
-}
 
 export async function GET(request) {
     const { database } = await connectToDatabase();
