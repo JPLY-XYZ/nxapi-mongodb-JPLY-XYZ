@@ -1,8 +1,15 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
+
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+};
+
 export async function OPTIONS() {
-    return new Response(null, { status: 204 });
+    return Response.json(null, { status: 204, headers: corsHeaders });
 }
 
 export async function GET(request, { params }) {
@@ -12,7 +19,7 @@ export async function GET(request, { params }) {
     const { id } = await params;
     const results = await collection.find({ _id: new ObjectId(id) }).toArray();
 
-    return new Response(JSON.stringify(results[0]));
+    return  Response.json(results[0], { headers: corsHeaders });
 }
 
 export async function PUT(request, { params }) {
@@ -30,7 +37,7 @@ export async function PUT(request, { params }) {
         { $set: { nombre, descripcion, imagen, fecha_entrada } }
     );
 
-    return new Response(JSON.stringify(results));
+    return Response.json(results, { headers: corsHeaders });
 }
 
 export async function DELETE(request, { params }) {
@@ -40,10 +47,6 @@ export async function DELETE(request, { params }) {
     const { id } = await params;
     const results = await collection.deleteOne({ _id: new ObjectId(id) });
 
-    return new Response(JSON.stringify(results), {
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-        },
-    });
+    return Response.json(results, { headers: corsHeaders });
 }
 
