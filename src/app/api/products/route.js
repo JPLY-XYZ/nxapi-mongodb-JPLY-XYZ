@@ -1,10 +1,5 @@
 import { connectToDatabase } from "@/lib/mongodb";
 
-const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
 
 
 export async function GET(request) {
@@ -13,14 +8,13 @@ export async function GET(request) {
 
     const results = await collection.find({}).toArray();
 
-    return Response.json(results, { headers: corsHeaders });
+    return Response.json(results);
 }
 
 export async function POST(request) {
     if (request.headers.get("content-type") !== "application/json") {
         return Response.json(
             { message: "Debes proporcionar datos JSON" },
-            { headers: corsHeaders }
         );
     }
 
@@ -38,6 +32,6 @@ export async function POST(request) {
 
     const results = await collection.insertOne(newProduct);
 
-    return Response.json(results, { headers: corsHeaders });
+    return Response.json(results);
 }
 

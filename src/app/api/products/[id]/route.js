@@ -2,11 +2,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 
-const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization"
-};
+
 
 export async function GET(request, { params }) {
     const { database } = await connectToDatabase();
@@ -15,7 +11,7 @@ export async function GET(request, { params }) {
     const { id } = await params;
     const results = await collection.find({ _id: new ObjectId(id) }).toArray();
 
-    return  Response.json(results[0], { headers: corsHeaders });
+    return  Response.json(results[0]);
 }
 
 export async function PUT(request, { params }) {
@@ -33,7 +29,7 @@ export async function PUT(request, { params }) {
         { $set: { nombre, descripcion, imagen, fecha_entrada } }
     );
 
-    return Response.json(results, { headers: corsHeaders });
+    return Response.json(results);
 }
 
 export async function DELETE(request, { params }) {
@@ -43,6 +39,6 @@ export async function DELETE(request, { params }) {
     const { id } = await params;
     const results = await collection.deleteOne({ _id: new ObjectId(id) });
 
-    return Response.json(results, { headers: corsHeaders });
+    return Response.json(results);
 }
 
